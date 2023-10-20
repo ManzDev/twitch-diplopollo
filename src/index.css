@@ -1,0 +1,10 @@
+body {
+  background: #223;
+  margin: 0;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  align-items: end;
+}
