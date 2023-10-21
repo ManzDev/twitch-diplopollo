@@ -1,7 +1,8 @@
 import "./DiploHead.js";
 
-const INC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 1.20, 1.10, 1.15, 1.05, 1.10, 1, 1.05, 1)";
-const DEC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 0.80, 0.90, 0.85, 0.95, 0.90, 1, 0.95, 1)";
+// *** NO-OBS
+// const INC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 1.20, 1.10, 1.15, 1.05, 1.10, 1, 1.05, 1)";
+// const DEC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 0.80, 0.90, 0.85, 0.95, 0.90, 1, 0.95, 1)";
 const CB_TIMING = "cubic-bezier(0.25, -0.75, 0.50, 1.75)";
 
 class DiploPollo extends HTMLElement {
