@@ -1,25 +1,29 @@
-const diploPollo = document.querySelector("diplo-pollo");
-
 export class Twitch {
   constructor() {
-    const channel = new URL(location.href).searchParams.get("channel") ?? "ManzDev";
-    const mode = new URL(location.href).searchParams.get("mode") ?? "bit";
+    const { searchParams } = new URL(location.href);
+    const channel = searchParams.get("channel") ?? "ManzDev";
+    const mode = searchParams.get("mode") ?? "bit";
 
+    this.diploPollo = document.querySelector("diplo-pollo");
+
+    this.connect(channel);
+    mode === "bit" && this.enableBitMode();
+    mode === "command" && this.enableCommandMode();
+  }
+
+  connect(channel) {
     // eslint-disable-next-line
     this.client = new tmi.Client({ channels: [channel] });
     this.client.connect();
-
-    mode === "bit" && this.enableBitMode();
-    mode === "command" && this.enableCommandMode();
   }
 
   enableBitMode() {
     this.client.on("cheer", (channel, userstate, message) => {
       const bits = userstate.bits ?? 1;
       const size = Math.floor(bits / 2);
-      diploPollo.incNeck(size);
+      this.diploPollo.incNeck(size);
       // const username = userstate?.username;
-      // diploPollo.setUsername(username);    // ** TO DO: Etiqueta con el último que donó
+      // this.diploPollo.setUsername(username);    // ** TO DO: Etiqueta con el último que donó
     });
   }
 
@@ -40,9 +44,9 @@ export class Twitch {
         console.log(number);
 
         if (number > 0) {
-          diploPollo.incNeck(number);
+          this.diploPollo.incNeck(number);
         } else if (number < 0) {
-          diploPollo.decNeck(Math.abs(number));
+          this.diploPollo.decNeck(Math.abs(number));
         }
       }
     });

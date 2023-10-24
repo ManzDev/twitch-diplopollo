@@ -20,7 +20,7 @@ class DiploHead extends HTMLElement {
       .head {
         width: 32px;
         height: 21px;
-        background: url("images/head.png");
+        background: var(--image-head);
         transform: translateY(1px);
       }
 

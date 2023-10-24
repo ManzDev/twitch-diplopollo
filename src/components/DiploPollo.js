@@ -16,6 +16,7 @@ class DiploPollo extends HTMLElement {
     return /* css */`
       :host {
         --scale: scale(3);
+        --image-head: url("images/skins/original.png");
       }
 
       .container {
@@ -35,6 +36,7 @@ class DiploPollo extends HTMLElement {
         height: 25px;
         background: url("images/body.png");
         animation: idle 400ms infinite steps(4);
+        position: relative;
       }
 
       @keyframes idle {
@@ -50,6 +52,10 @@ class DiploPollo extends HTMLElement {
     this.updateNeck();
   }
 
+  setHead(headName) {
+    this.style.setProperty("--image-head", `url("images/skins/${headName}.png")`);
+  }
+
   updateNeck() {
     this.style.setProperty("--neck-size", `${this.neckSize}px`);
   }
@@ -62,6 +68,12 @@ class DiploPollo extends HTMLElement {
 
   connectedCallback() {
     this.render();
+
+    // head
+    const headName = new URL(location.href).searchParams.get("skin");
+    if (headName) {
+      this.setHead(headName);
+    }
   }
 
   render() {
