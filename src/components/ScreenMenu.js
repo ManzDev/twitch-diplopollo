@@ -26,7 +26,8 @@ class ScreenMenu extends HTMLElement {
   }
 
   getURL() {
-    const baseUrl = new URL(location.href).origin;
+    const url = new URL(location.href);
+    const baseUrl = `${url.origin}${url.pathname}`;
     const [channel, ...selects] = [...this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])")];
     const channelName = channel.value;
     const urlSearch = selects.map(select => `${select.name}=${select[select.selectedIndex].value}`).join("&");
