@@ -109,7 +109,7 @@
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo.">ℹ</info-popup>
           <select name="decrease" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -118,7 +118,7 @@
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el pollo se vuelve semitransparente.">ℹ</info-popup>
           <select name="ghost" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -136,7 +136,7 @@
           <info-popup title="Activa los sonidos. Desmarcado, mutea los sonidos.">ℹ</info-popup>
           <select name="sound" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -145,7 +145,7 @@
           <info-popup title="Funcionalidad especial">ℹ</info-popup>
           <select name="multineck" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
