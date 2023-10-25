@@ -11,7 +11,18 @@ class ScreenMenu extends HTMLElement {
     return styles;
   }
 
+  preload() {
+    SKINS.forEach(skin => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.href = `images/skins/${skin.value}.png`;
+      link.as = "image";
+      document.head.append(link);
+    });
+  }
+
   connectedCallback() {
+    this.preload();
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
     const skinSelect = this.shadowRoot.querySelector("select[name=skin]");
@@ -26,6 +37,7 @@ class ScreenMenu extends HTMLElement {
     if (!channel.value) {
       channel.reportValidity();
     } else {
+      localStorage.setItem("channel", channel.value);
       const url = this.shadowRoot.querySelector("textarea").value;
       await navigator.clipboard.writeText(url);
     }
@@ -41,7 +53,10 @@ class ScreenMenu extends HTMLElement {
     const baseUrl = `${url.origin}${url.pathname}`;
     const [channel, ...selects] = [...this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])")];
     const channelName = channel.value;
-    const urlSearch = selects.map(select => `${select.name}=${select[select.selectedIndex].value}`).join("&");
+    const urlSearch = selects
+      .filter(select => select[select.selectedIndex].value !== "none")
+      .map(select => `${select.name}=${select[select.selectedIndex].value}`)
+      .join("&");
     return `${baseUrl}?channel=${channelName.toLowerCase()}&${urlSearch}`;
   }
 
@@ -51,6 +66,7 @@ class ScreenMenu extends HTMLElement {
   }
 
   render() {
+    const channel = localStorage.getItem("channel") ?? "";
     this.shadowRoot.innerHTML = /* html */`
     <style>${ScreenMenu.styles}</style>
     <img src="images/logo.png" alt="Logo DiploPollo">
@@ -61,7 +77,7 @@ class ScreenMenu extends HTMLElement {
         <label>
           <p>Canal de Twitch</p>
           <info-popup title="Canal de Twitch al que queremos conectarnos">ℹ</info-popup>
-          <input type="text" name="channel" placeholder="ManzDev"
+          <input type="text" name="channel" placeholder="ManzDev" value="${channel}"
                 required pattern="([a-zA-Z0-9_])+">
         </label>
 
@@ -83,6 +99,15 @@ class ScreenMenu extends HTMLElement {
         </label>
 
         <label>
+          <p>Interacción</p>
+          <info-popup title="Cuando hay una interacción con el pollo, ocurre algo adicional">ℹ</info-popup>
+          <select name="action">
+            <option value="none" selected>Ninguna</option>
+            <option value="confetti">Party</option>
+          </select>
+        </label>
+
+        <label>
           <p>Autodecrecimiento</p>
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo.">ℹ</info-popup>
           <select name="decrease" disabled>
@@ -97,15 +122,6 @@ class ScreenMenu extends HTMLElement {
           <select name="ghost" disabled>
             <option value="1">Activado</option>
             <option value="0" selected>Desactivado</option>
-          </select>
-        </label>
-
-        <label>
-          <p>Interacción</p>
-          <info-popup title="Cuando hay una interacción con el pollo, ocurre algo adicional">ℹ</info-popup>
-          <select name="action" disabled>
-            <option value="none" selected>Ninguna</option>
-            <option value="confetti">Party</option>
           </select>
         </label>
 

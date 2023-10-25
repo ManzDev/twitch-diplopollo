@@ -1,8 +1,10 @@
+import { getParam } from "./getParam.js";
+const MAX_SIZE = 300;
+
 export class Twitch {
   constructor() {
-    const { searchParams } = new URL(location.href);
-    const channel = searchParams.get("channel") ?? "ManzDev";
-    const mode = searchParams.get("mode") ?? "bit";
+    const channel = getParam("channel") ?? "ManzDev";
+    const mode = getParam("mode") ?? "bit";
 
     this.diploPollo = document.querySelector("diplo-pollo");
 
@@ -37,17 +39,10 @@ export class Twitch {
 
       if (command === "!pollo") {
         const number = Number.parseInt(message.split(" ").at(1) ?? 1);
-        const isValidNumber = !isNaN(number) && number > -300 && number < 300;
+        const isValidNumber = !isNaN(number) && number > -MAX_SIZE && number < MAX_SIZE;
 
         if (!isValidNumber) return;
-
-        console.log(number);
-
-        if (number > 0) {
-          this.diploPollo.incNeck(number);
-        } else if (number < 0) {
-          this.diploPollo.decNeck(Math.abs(number));
-        }
+        this.diploPollo.incNeck(number);
       }
     });
   }
