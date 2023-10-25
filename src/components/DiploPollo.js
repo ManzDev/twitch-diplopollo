@@ -1,3 +1,5 @@
+import confetti from "canvas-confetti";
+import { getParam } from "../modules/getParam.js";
 import "./DiploHead.js";
 
 // *** NO-OBS
@@ -58,12 +60,13 @@ class DiploPollo extends HTMLElement {
 
   updateNeck() {
     this.style.setProperty("--neck-size", `${this.neckSize}px`);
-  }
+    const isConfetti = getParam("action") === "confetti";
 
-  decNeck(size) {
-    this.style.setProperty("--neck-timing", CB_TIMING);
-    this.neckSize = Math.max(0, this.neckSize - size);
-    this.updateNeck();
+    isConfetti && confetti({
+      particleCount: 50,
+      spread: 42,
+      origin: { x: 0.02, y: 1 }
+    });
   }
 
   connectedCallback() {
