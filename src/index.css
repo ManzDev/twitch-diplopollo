@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: Jost;
+  src:
+    url("fonts/jost-vf.woff2") format("woff2"),
+    url("fonts/jost-vf.woff") format("woff"),
+    url("fonts/jost-vf.ttf") format("truetype");
+}
+
+@font-face {
   font-family: EnterCommand;
   src:
     url("fonts/entercommand.woff2") format("woff2"),
