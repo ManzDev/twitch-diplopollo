@@ -1,3 +1,7 @@
+:host {
+  position: relative;
+}
+
 .container {
   --offset: 8px;
 
@@ -11,6 +15,8 @@
     calc(var(--offset) * 3) calc(var(--offset) * 3) 0 #0008,
     calc(var(--offset) * 4) calc(var(--offset) * 4) 0 #0004;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -138,4 +144,26 @@ info-popup {
   place-items: center;
   border-radius: 50%;
   transform: translate(0.25rem, -0.05rem);
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(30px, -125px) rotate(45deg) scale(4);
+
+  & .head {
+    width: 32px;
+    height: 21px;
+    background: var(--image-head, url("images/skins/original.png"));
+    transform: translateY(1px);
+  }
+
+  & .neck {
+    width: 32px;
+    height: 25px;
+    background: url("images/neck.png");
+  }
 }

@@ -1,4 +1,5 @@
 import styles from "./ScreenMenu.css?inline";
+import SKINS from "../assets/skins.json";
 
 class ScreenMenu extends HTMLElement {
   constructor() {
@@ -13,16 +14,26 @@ class ScreenMenu extends HTMLElement {
   connectedCallback() {
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
+    const skinSelect = this.shadowRoot.querySelector("select[name=skin]");
+    skinSelect.addEventListener("input", () => this.changeHead(skinSelect));
     input.addEventListener("input", () => this.updateURL());
-    selects.forEach(field => {
-      field.addEventListener("change", () => this.updateURL());
-    });
+    selects.forEach(field => field.addEventListener("change", () => this.updateURL()));
     this.shadowRoot.querySelector("button").addEventListener("click", () => this.copyURL());
   }
 
   async copyURL() {
-    const url = this.shadowRoot.querySelector("textarea").value;
-    await navigator.clipboard.writeText(url);
+    const channel = this.shadowRoot.querySelector("input[name=channel]");
+    if (!channel.value) {
+      channel.reportValidity();
+    } else {
+      const url = this.shadowRoot.querySelector("textarea").value;
+      await navigator.clipboard.writeText(url);
+    }
+  }
+
+  changeHead(skinSelect) {
+    const name = skinSelect[skinSelect.selectedIndex].value;
+    this.style.setProperty("--image-head", `url("images/skins/${name}.png")`);
   }
 
   getURL() {
@@ -50,7 +61,8 @@ class ScreenMenu extends HTMLElement {
         <label>
           <p>Canal de Twitch</p>
           <info-popup title="Canal de Twitch al que queremos conectarnos">ℹ</info-popup>
-          <input type="text" name="channel" placeholder="ManzDev" required>
+          <input type="text" name="channel" placeholder="ManzDev"
+                required pattern="([a-zA-Z0-9_])+">
         </label>
 
         <label>
@@ -66,12 +78,7 @@ class ScreenMenu extends HTMLElement {
           <p>Skin</p>
           <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
           <select name="skin">
-            <option value="original">Genuine DiploPollo™</option>
-            <option value="sunglasses">Beach DiploPollo™</option>
-            <option value="king">King DiploPollo™</option>
-            <option value="niv3k">DiploDuck™</option>
-            <option value="halloween">DecapiPollo™</option>
-            <option value="paperbag" disabled>McDiploPollo™</option>
+            ${SKINS.map(skin => /* html */`<option value="${skin.value}">${skin.name}</option>`)}
           </select>
         </label>
 
@@ -80,7 +87,7 @@ class ScreenMenu extends HTMLElement {
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo.">ℹ</info-popup>
           <select name="decrease" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -89,7 +96,7 @@ class ScreenMenu extends HTMLElement {
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el pollo se vuelve semitransparente.">ℹ</info-popup>
           <select name="ghost" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -107,7 +114,7 @@ class ScreenMenu extends HTMLElement {
           <info-popup title="Activa los sonidos. Desmarcado, mutea los sonidos.">ℹ</info-popup>
           <select name="sound" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -116,7 +123,7 @@ class ScreenMenu extends HTMLElement {
           <info-popup title="Funcionalidad especial">ℹ</info-popup>
           <select name="multineck" disabled>
             <option value="1">Activado</option>
-            <option value="0">Desactivado</option>
+            <option value="0" selected>Desactivado</option>
           </select>
         </label>
 
@@ -124,7 +131,14 @@ class ScreenMenu extends HTMLElement {
         <button>Copiar URL</button>
         <small>Copia esta URL y pegala en el OBS como fuente de navegador.</small>
       </div>
-    </div>`;
+    </div>
+    <div class="preview">
+      <div class="group">
+        <div class="head"></div>
+        <div class="neck"></div>
+      </div>
+    </div>
+    `;
   }
 }
 
