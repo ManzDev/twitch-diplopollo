@@ -2,16 +2,28 @@ import confetti from "canvas-confetti";
 import { getParam } from "../modules/getParam.js";
 import "./DiploHead.js";
 
+const SOUND_PROBABILITY = 6;
+const AUDIOS = [];
+
 // *** NO-OBS
 // const INC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 1.20, 1.10, 1.15, 1.05, 1.10, 1, 1.05, 1)";
 // const DEC_TIMING = "linear(0, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 0.80, 0.90, 0.85, 0.95, 0.90, 1, 0.95, 1)";
 const CB_TIMING = "cubic-bezier(0.25, -0.75, 0.50, 1.75)";
+const INTERVAL_TIME = 5 * 60 * 1000;
+const IDLE_NECK_DECREMENT = -5;
+const IDLE_OPACITY = 0.25;
+
+const headName = new URL(location.href).searchParams.get("skin");
+const decreaseEnabled = new URL(location.href).searchParams.get("decrease") === "1";
+const ghostEnabled = new URL(location.href).searchParams.get("ghost") === "1";
+const soundEnabled = new URL(location.href).searchParams.get("sound") === "1";
 
 class DiploPollo extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
     this.neckSize = 0;
+    this.activity = 0;
   }
 
   static get styles() {
@@ -26,6 +38,8 @@ class DiploPollo extends HTMLElement {
         transform: var(--scale);
         transform-origin: 0 100%;
         image-rendering: pixelated;
+        opacity: var(--opacity, 1);
+        transition: opacity 0.3s;
       }
 
       diplo-head {
@@ -48,10 +62,34 @@ class DiploPollo extends HTMLElement {
     `;
   }
 
+  setOpacity(value) {
+    const isAllowRange = value >= 0 && value <= 1;
+    if (!isAllowRange) return;
+
+    this.style.setProperty("--opacity", value);
+  }
+
   incNeck(size) {
     this.style.setProperty("--neck-timing", CB_TIMING);
     this.neckSize += size;
     this.updateNeck();
+    this.activity++;
+    this.setOpacity(1);
+    this.playSound();
+  }
+
+  playSound() {
+    if (!soundEnabled) {
+      return;
+    }
+
+    const i = ~~(Math.random() * SOUND_PROBABILITY);
+    if (i === 0) {
+      const index = ~~(Math.random() * AUDIOS.length);
+      const audio = AUDIOS[index];
+      audio.currentTime = 0;
+      audio.play();
+    }
   }
 
   setHead(headName) {
@@ -72,11 +110,35 @@ class DiploPollo extends HTMLElement {
   connectedCallback() {
     this.render();
 
-    // head
-    const headName = new URL(location.href).searchParams.get("skin");
+    this.initSound();
+    this.manageSkins();
+    setInterval(() => this.manageEvents(), INTERVAL_TIME);
+  }
+
+  initSound() {
+    if (soundEnabled) {
+      for (let i = 1; i < 5; i++) {
+        AUDIOS.push(new Audio(`sounds/chicken-${i}.mp3`));
+      }
+    }
+  }
+
+  manageSkins() {
     if (headName) {
       this.setHead(headName);
     }
+  }
+
+  manageEvents() {
+    const hasActivity = this.activity > 0;
+
+    if (!hasActivity) {
+      decreaseEnabled && this.neckSize > 0 && this.incNeck(IDLE_NECK_DECREMENT);
+      ghostEnabled && this.setOpacity(IDLE_OPACITY);
+    }
+
+    // Reset
+    this.activity = 0;
   }
 
   render() {

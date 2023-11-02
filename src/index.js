@@ -1,6 +1,6 @@
+import { Twitch } from "./modules/Twitch.js";
 import "./components/DiploPollo.js";
 import "./components/ScreenMenu.js";
-import { Twitch } from "./modules/Twitch.js";
 
 const container = document.querySelector(".container");
 const { searchParams } = new URL(location.href);

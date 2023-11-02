@@ -1,5 +1,7 @@
+import "../components/SelectSkin.js";
 import styles from "./ScreenMenu.css?inline";
 import SKINS from "../assets/skins.json";
+import { version } from "../../package.json";
 
 class ScreenMenu extends HTMLElement {
   constructor() {
@@ -25,8 +27,15 @@ class ScreenMenu extends HTMLElement {
     this.preload();
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
-    const skinSelect = this.shadowRoot.querySelector("select[name=skin]");
-    skinSelect.addEventListener("input", () => this.changeHead(skinSelect));
+    /*
+    // const skinSelect = this.shadowRoot.querySelector("select[name=skin]");
+    // const firstOption = skinSelect.querySelector("option");
+    // firstOption.setAttribute("selected", "");
+    // skinSelect.addEventListener("input", () => this.changeHead(skinSelect));
+    */
+    const skinSelect = this.shadowRoot.querySelector("select-skin");
+    skinSelect.addEventListener("selectskin", ({ detail }) => this.changeHead(detail));
+
     input.addEventListener("input", () => this.updateURL());
     selects.forEach(field => field.addEventListener("change", () => this.updateURL()));
     this.shadowRoot.querySelector("button").addEventListener("click", () => this.copyURL());
@@ -43,9 +52,11 @@ class ScreenMenu extends HTMLElement {
     }
   }
 
-  changeHead(skinSelect) {
-    const name = skinSelect[skinSelect.selectedIndex].value;
+  changeHead(name) {
+    // const name = skinSelect[skinSelect.selectedIndex].value;
+    // this.style.setProperty("--image-head", `url("images/skins/${name}.png")`);
     this.style.setProperty("--image-head", `url("images/skins/${name}.png")`);
+    this.updateURL();
   }
 
   getURL() {
@@ -53,10 +64,12 @@ class ScreenMenu extends HTMLElement {
     const baseUrl = `${url.origin}${url.pathname}`;
     const [channel, ...selects] = [...this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])")];
     const channelName = channel.value;
-    const urlSearch = selects
+    const selectSkin = this.shadowRoot.querySelector("select-skin");
+    const params = selects
       .filter(select => select[select.selectedIndex].value !== "none")
-      .map(select => `${select.name}=${select[select.selectedIndex].value}`)
-      .join("&");
+      .map(select => `${select.name}=${select[select.selectedIndex].value}`);
+    params.push(`skin=${selectSkin.value}`);
+    const urlSearch = params.join("&");
     return `${baseUrl}?channel=${channelName.toLowerCase()}&${urlSearch}`;
   }
 
@@ -69,7 +82,10 @@ class ScreenMenu extends HTMLElement {
     const channel = localStorage.getItem("channel") ?? "";
     this.shadowRoot.innerHTML = /* html */`
     <style>${ScreenMenu.styles}</style>
-    <img src="images/logo.png" alt="Logo DiploPollo">
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo DiploPollo">
+      <span class="version">v${version}</span>
+    </div>
     <div class="container">
 
       <div class="data">
@@ -93,9 +109,10 @@ class ScreenMenu extends HTMLElement {
         <label>
           <p>Skin</p>
           <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
-          <select name="skin">
-            ${SKINS.map(skin => /* html */`<option value="${skin.value}">${skin.name}</option>`)}
-          </select>
+          <select-skin></select-skin>
+          <!-- select name="skin">
+            ${SKINS.map(skin => /* html */`<option value="${skin.value}">${skin.name}</option>`).join("")}
+          </select-->
         </label>
 
         <label>
@@ -110,27 +127,27 @@ class ScreenMenu extends HTMLElement {
         <label>
           <p>Autodecrecimiento</p>
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo.">ℹ</info-popup>
-          <select name="decrease" disabled>
+          <select name="decrease">
             <option value="1">Activado</option>
-            <option value="0" selected>Desactivado</option>
+            <option value="none" selected>Desactivado</option>
           </select>
         </label>
 
         <label>
           <p>Idle ghost</p>
           <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el pollo se vuelve semitransparente.">ℹ</info-popup>
-          <select name="ghost" disabled>
+          <select name="ghost">
             <option value="1">Activado</option>
-            <option value="0" selected>Desactivado</option>
+            <option value="none" selected>Desactivado</option>
           </select>
         </label>
 
         <label>
           <p>Sonido</p>
           <info-popup title="Activa los sonidos. Desmarcado, mutea los sonidos.">ℹ</info-popup>
-          <select name="sound" disabled>
+          <select name="sound">
             <option value="1">Activado</option>
-            <option value="0" selected>Desactivado</option>
+            <option value="none" selected>Desactivado</option>
           </select>
         </label>
 
@@ -139,7 +156,7 @@ class ScreenMenu extends HTMLElement {
           <info-popup title="Funcionalidad especial">ℹ</info-popup>
           <select name="multineck" disabled>
             <option value="1">Activado</option>
-            <option value="0" selected>Desactivado</option>
+            <option value="none" selected>Desactivado</option>
           </select>
         </label>
 

@@ -6,7 +6,7 @@
   --offset: 8px;
 
   width: 475px;
-  height: 600px;
+  min-height: 600px;
   background: #888;
   background-image: url("images/cardboard-flat.png");
   box-shadow:
@@ -27,18 +27,30 @@ h1 {
   font-size: 5.25rem;
   margin-bottom: 1.5rem;
   text-align: center;
-
-  /* text-shadow: -4px -4px 0 red, -8px -8px 0 darkred; */
   filter:
     drop-shadow(-3px 0 var(--color))
     drop-shadow(0 3px var(--color));
 }
 
-img {
-  display: block;
-  width: 256px;
-  margin: 2rem auto;
-  margin-top: 0;
+.logo {
+  text-align: center;
+
+  & img {
+    display: block;
+    width: 256px;
+    margin: 2rem auto;
+    margin-top: 0;
+  }
+
+  & .version {
+    background: darkred;
+    padding: 0 12px;
+    color: #fff;
+    font-family: EnterCommand, monospace;
+    font-size: 27px;
+    display: inline-block;
+    transform: translate(95px, -35px) rotate(-7deg);
+  }
 }
 
 .data {
@@ -130,6 +142,15 @@ select[disabled] {
   background: #555;
   color: #222;
   cursor: not-allowed;
+}
+
+select[name="skin"] {
+  & option:checked {
+    background: #8da3c2;
+  }
+
+  &::-webkit-scrollbar { background: #222; }
+  &::-webkit-scrollbar-thumb { background: #0967ab; }
 }
 
 info-popup {

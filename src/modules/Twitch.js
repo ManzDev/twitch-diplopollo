@@ -1,8 +1,12 @@
 import { getParam } from "./getParam.js";
 const MAX_SIZE = 300;
 
+const MIN_INCREMENT = 5;
+const COOLDOWN_TIME = 10 * 1000;
+
 export class Twitch {
   constructor() {
+    this.lastCommand = null;
     const channel = getParam("channel") ?? "ManzDev";
     const mode = getParam("mode") ?? "bit";
 
@@ -32,17 +36,19 @@ export class Twitch {
   enableCommandMode() {
     this.client.on("message", (channel, tags, message, self) => {
       const isCommand = message[0] === "!";
+      const isOutCooldown = (new Date().getTime() - COOLDOWN_TIME) > this.lastCommand;
 
-      if (!isCommand) return;
+      if (!isCommand || !isOutCooldown) return;
 
       const command = message.split(" ").at(0).toLowerCase();
 
       if (command === "!pollo") {
-        const number = Number.parseInt(message.split(" ").at(1) ?? 1);
+        const number = Number.parseInt(message.split(" ").at(1) ?? MIN_INCREMENT);
         const isValidNumber = !isNaN(number) && number > -MAX_SIZE && number < MAX_SIZE;
 
         if (!isValidNumber) return;
         this.diploPollo.incNeck(number);
+        this.lastCommand = new Date().getTime();
       }
     });
   }
