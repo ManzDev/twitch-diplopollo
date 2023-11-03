@@ -71,4 +71,4 @@ var ke=(M,a)=>()=>(a||M((a={exports:{}}).exports,a),a.exports);var je=ke((He,F)=
     <div class="container">
       <diplo-head></diplo-head>
       <div class="body"></div>
-    </div>`}}customElements.define("diplo-pollo",j);const A=document.querySelector(".container"),{searchParams:We}=new URL(location.href),X=!!We.get("channel");if(X){const M=document.createElement("diplo-pollo");A.classList.add("diplopollo-mode"),M.classList.add("animated"),A.append(M),new Re}if(!X){xe(()=>import("./ScreenMenu-a5cc8ba8.js"),[]),A.classList.add("menu-mode");const M=document.createElement("screen-menu");A.append(M)}});export default je();
+    </div>`}}customElements.define("diplo-pollo",j);const A=document.querySelector(".container"),{searchParams:We}=new URL(location.href),X=!!We.get("channel");if(X){const M=document.createElement("diplo-pollo");A.classList.add("diplopollo-mode"),M.classList.add("animated"),A.append(M),new Re}if(!X){xe(()=>import("./ScreenMenu-93c09401.js"),[]),A.classList.add("menu-mode");const M=document.createElement("screen-menu");A.append(M)}});export default je();
