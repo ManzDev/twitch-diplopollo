@@ -71,6 +71,12 @@ class ScreenMenu extends HTMLElement {
       <div class="data">
 
         <label>
+          <p>Skin</p>
+          <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
+          <select-skin></select-skin>
+        </label>
+
+        <label>
           <p>Canal de Twitch</p>
           <info-popup title="Canal de Twitch al que queremos conectarnos">ℹ</info-popup>
           <input type="text" name="channel" placeholder="ManzDev" value="${channel}"
@@ -84,12 +90,6 @@ class ScreenMenu extends HTMLElement {
             <option value="command" selected>Comando !pollo</option>
             <option value="bit">Bits (Donaciones)</option>
           </select>
-        </label>
-
-        <label>
-          <p>Skin</p>
-          <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
-          <select-skin></select-skin>
         </label>
 
         <label>

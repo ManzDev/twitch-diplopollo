@@ -4,6 +4,7 @@ class SelectSkin extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.currentIndex = 0;
   }
 
   static get styles() {
@@ -54,9 +55,38 @@ class SelectSkin extends HTMLElement {
       .replace(".png", "");
   }
 
+  left() {
+    this.unselectAll();
+    this.currentIndex = (this.currentIndex - 1) >= 0 ? this.currentIndex - 1 : this.images.length + (this.currentIndex - 1);
+    this.images[this.currentIndex].classList.add("selected");
+  }
+
+  right() {
+    this.unselectAll();
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.images[this.currentIndex].classList.add("selected");
+  }
+
+  unselectAll() {
+    this.shadowRoot.querySelector("img.selected").classList.remove("selected");
+  }
+
   connectedCallback() {
     this.preload();
     this.render();
+
+    addEventListener("keydown", (ev) => {
+      const { key } = ev;
+      const isPrev = key === "ArrowLeft" || key === "ArrowUp";
+      const isNext = key === "ArrowRight" || key === "ArrowDown";
+
+      if (isPrev || isNext) {
+        ev.preventDefault();
+      }
+
+      isPrev && this.left();
+      isNext && this.right();
+    });
 
     this.images = [...this.shadowRoot.querySelectorAll("img")];
     const firstImage = this.images[0];
@@ -66,7 +96,8 @@ class SelectSkin extends HTMLElement {
   }
 
   selectSkin(index) {
-    this.shadowRoot.querySelector("img.selected").classList.remove("selected");
+    this.currentIndex = index;
+    this.unselectAll();
     this.images[index].classList.add("selected");
     const event = new CustomEvent("selectskin", {
       composed: true,

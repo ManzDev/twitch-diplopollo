@@ -64,7 +64,7 @@ h1 {
     gap: 1rem;
   }
 
-  & label:nth-child(3) {
+  & label:first-child {
     grid-row-start: 1;
     & :is(p, info-popup) { display: none; }
 
