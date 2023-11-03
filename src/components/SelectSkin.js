@@ -48,7 +48,10 @@ class SelectSkin extends HTMLElement {
 
   get value() {
     const url = new URL(this.shadowRoot.querySelector("img.selected").src).pathname;
-    return url.replace("/images/skins/", "").replace(".png", "");
+    return url
+      .replace("/twitch-diplopollo/images/skins/", "")
+      .replace("/images/skins/", "")
+      .replace(".png", "");
   }
 
   connectedCallback() {
