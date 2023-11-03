@@ -1,5 +1,6 @@
 {
   "extends": "stylelint-config-manzdev",
   "rules": {
+    "selector-type-no-unknown": [true, { "ignore": [ "custom-elements" ] }]
   }
 }

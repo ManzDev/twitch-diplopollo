@@ -55,6 +55,19 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 3. Realiza tus cambios y asegúrate de que todo funcione correctamente.
 4. Envía un pull request a la rama `main` del repositorio original.
 
+También puedes darnos nuevas ideas o enviarnos skins para añadir en el [Discord de Manz.dev](https://discord.manz.dev/).
+
+## Ideas y posibles features o cambios
+
+- [ ] Confetti selectivo, sólo en incrementos > 20 (BlurSoul_)
+- [X] Cooldown en comandos (Chrisvdev)
+- [ ] Cartelito con quien lo ha activado
+- [ ] Skin random (BlurSoul_)
+- [ ] Frases para el pollo (omaarguirre)
+- [ ] Diplopollo ponga huevos
+- [ ] DiploPollo 3000
+- [ ] Refactorización y reorganización de código
+
 ## Créditos
 
 - Desarrollado en directo en el canal [ManzDev](https://manz.dev/).

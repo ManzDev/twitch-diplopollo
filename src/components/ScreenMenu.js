@@ -1,6 +1,5 @@
 import "../components/SelectSkin.js";
 import styles from "./ScreenMenu.css?inline";
-import SKINS from "../assets/skins.json";
 import { version } from "../../package.json";
 
 class ScreenMenu extends HTMLElement {
@@ -13,26 +12,9 @@ class ScreenMenu extends HTMLElement {
     return styles;
   }
 
-  preload() {
-    SKINS.forEach(skin => {
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.href = `images/skins/${skin.value}.png`;
-      link.as = "image";
-      document.head.append(link);
-    });
-  }
-
   connectedCallback() {
-    this.preload();
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
-    /*
-    // const skinSelect = this.shadowRoot.querySelector("select[name=skin]");
-    // const firstOption = skinSelect.querySelector("option");
-    // firstOption.setAttribute("selected", "");
-    // skinSelect.addEventListener("input", () => this.changeHead(skinSelect));
-    */
     const skinSelect = this.shadowRoot.querySelector("select-skin");
     skinSelect.addEventListener("selectskin", ({ detail }) => this.changeHead(detail));
 
@@ -53,8 +35,6 @@ class ScreenMenu extends HTMLElement {
   }
 
   changeHead(name) {
-    // const name = skinSelect[skinSelect.selectedIndex].value;
-    // this.style.setProperty("--image-head", `url("images/skins/${name}.png")`);
     this.style.setProperty("--image-head", `url("images/skins/${name}.png")`);
     this.updateURL();
   }
@@ -110,9 +90,6 @@ class ScreenMenu extends HTMLElement {
           <p>Skin</p>
           <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
           <select-skin></select-skin>
-          <!-- select name="skin">
-            ${SKINS.map(skin => /* html */`<option value="${skin.value}">${skin.name}</option>`).join("")}
-          </select-->
         </label>
 
         <label>

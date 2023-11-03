@@ -36,8 +36,8 @@ body {
   background-blend-mode: multiply;
   background-size: 256px;
   image-rendering: pixelated;
-  min-height: 100vh;
-  padding-bottom: 4rem;
+  min-height: 98vh;
+  padding-bottom: 2rem;
 }
 
 .container.diplopollo-mode {

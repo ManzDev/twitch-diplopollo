@@ -36,12 +36,23 @@ class SelectSkin extends HTMLElement {
     `;
   }
 
+  preload() {
+    SKINS.forEach(skin => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.href = `images/skins/${skin.value}.png`;
+      link.as = "image";
+      document.head.append(link);
+    });
+  }
+
   get value() {
     const url = new URL(this.shadowRoot.querySelector("img.selected").src).pathname;
     return url.replace("/images/skins/", "").replace(".png", "");
   }
 
   connectedCallback() {
+    this.preload();
     this.render();
 
     this.images = [...this.shadowRoot.querySelectorAll("img")];
