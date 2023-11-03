@@ -183,7 +183,7 @@ info-popup {
   position: absolute;
   top: 50%;
   right: 0;
-  transform: translate(30px, -125px) rotate(45deg) scale(4);
+  animation: idle 0.3s steps(2) infinite alternate;
 
   & .head {
     width: 32px;
@@ -196,5 +196,15 @@ info-popup {
     width: 32px;
     height: 25px;
     background: url("images/neck.png");
+  }
+}
+
+@keyframes idle {
+  0% {
+    transform: translate(30px, -120px) rotate(45deg) scale(4);
+  }
+
+  100% {
+    transform: translate(0, -90px) rotate(45deg)  scale(4);
   }
 }

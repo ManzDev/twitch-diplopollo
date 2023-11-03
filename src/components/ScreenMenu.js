@@ -1,6 +1,7 @@
 import "../components/SelectSkin.js";
 import styles from "./ScreenMenu.css?inline";
 import { version } from "../../package.json";
+import { musicManager } from "../modules/musicManager.js";    // eslint-disable-line
 
 class ScreenMenu extends HTMLElement {
   constructor() {

@@ -27,6 +27,12 @@ body {
   background: #001;
 }
 
+.music-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 .container.menu-mode {
   display: grid;
   place-items: center;
