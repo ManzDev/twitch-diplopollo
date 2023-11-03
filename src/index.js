@@ -1,6 +1,5 @@
 import { Twitch } from "./modules/Twitch.js";
 import "./components/DiploPollo.js";
-import "./components/ScreenMenu.js";
 
 const container = document.querySelector(".container");
 const { searchParams } = new URL(location.href);
@@ -16,6 +15,7 @@ if (hasChannel) {
 }
 
 if (!hasChannel) {
+  import("./components/ScreenMenu.js");
   container.classList.add("menu-mode");
   const screenMenu = document.createElement("screen-menu");
   container.append(screenMenu);
