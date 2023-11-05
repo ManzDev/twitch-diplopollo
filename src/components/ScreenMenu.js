@@ -10,7 +10,12 @@ class ScreenMenu extends HTMLElement {
   }
 
   static get styles() {
-    return styles;
+    return /* css */`
+      :host {
+        --image-head: url("images/skins/${localStorage.getItem("skin") ?? "original"}.png");
+      }
+      ${styles}
+    `;
   }
 
   connectedCallback() {
