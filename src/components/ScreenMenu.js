@@ -22,11 +22,17 @@ class ScreenMenu extends HTMLElement {
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
     const skinSelect = this.shadowRoot.querySelector("select-skin");
+    const actionSelect = this.shadowRoot.querySelector("select[name='action']");
     skinSelect.addEventListener("selectskin", ({ detail }) => this.changeHead(detail));
 
     input.addEventListener("input", () => this.updateURL());
     selects.forEach(field => field.addEventListener("change", () => this.updateURL()));
     this.shadowRoot.querySelector("button").addEventListener("click", () => this.copyURL());
+    actionSelect.addEventListener("change", async () => {
+      if (actionSelect.options[actionSelect.selectedIndex].value === "confetti") {
+        (await import("canvas-confetti")).default();
+      }
+    });
   }
 
   async copyURL() {
