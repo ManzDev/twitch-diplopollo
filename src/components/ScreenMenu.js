@@ -67,6 +67,7 @@ class ScreenMenu extends HTMLElement {
     const textarea = this.shadowRoot.querySelector("textarea");
     const button = this.shadowRoot.querySelector("button");
     textarea.value = this.getURL();
+    localStorage.setItem("url", this.getURL());
     button.textContent = "Copiar URL";
   }
 
@@ -149,7 +150,7 @@ class ScreenMenu extends HTMLElement {
           </select>
         </label>
 
-        <textarea class="code" readonly></textarea>
+        <textarea class="code" readonly>${localStorage.getItem("url") ?? ""}</textarea>
         <button>Copiar URL</button>
         <small>Copia esta URL y pegala en el OBS como fuente de navegador.</small>
       </div>
