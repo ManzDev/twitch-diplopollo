@@ -30,7 +30,11 @@ class ScreenMenu extends HTMLElement {
       channel.reportValidity();
     } else {
       localStorage.setItem("channel", channel.value);
-      const url = this.shadowRoot.querySelector("textarea").value;
+      const textarea = this.shadowRoot.querySelector("textarea");
+      const button = this.shadowRoot.querySelector("button");
+      const url = textarea.value;
+      textarea.select();
+      button.textContent = "¡URL copiada!";
       await navigator.clipboard.writeText(url);
     }
   }
@@ -56,7 +60,9 @@ class ScreenMenu extends HTMLElement {
 
   updateURL() {
     const textarea = this.shadowRoot.querySelector("textarea");
+    const button = this.shadowRoot.querySelector("button");
     textarea.value = this.getURL();
+    button.textContent = "Copiar URL";
   }
 
   render() {
