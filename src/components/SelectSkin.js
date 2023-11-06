@@ -38,10 +38,11 @@ class SelectSkin extends HTMLElement {
   }
 
   preload() {
+    const url = new URL(location.href);
     SKINS.forEach(skin => {
       const link = document.createElement("link");
       link.rel = "preload";
-      link.href = `images/skins/${skin.value}.png`;
+      link.href = `${url.href}images/skins/${skin.value}.png`;
       link.as = "image";
       document.head.append(link);
     });
