@@ -59,12 +59,16 @@ class SelectSkin extends HTMLElement {
     this.unselectAll();
     this.currentIndex = (this.currentIndex - 1) >= 0 ? this.currentIndex - 1 : this.images.length + (this.currentIndex - 1);
     this.images[this.currentIndex].classList.add("selected");
+    this.selectSkin(this.currentIndex);
+    localStorage.setItem("skin", this.images[this.currentIndex].dataset.name);
   }
 
   right() {
     this.unselectAll();
     this.currentIndex = (this.currentIndex + 1) % this.images.length;
     this.images[this.currentIndex].classList.add("selected");
+    this.selectSkin(this.currentIndex);
+    localStorage.setItem("skin", this.images[this.currentIndex].dataset.name);
   }
 
   unselectAll() {
@@ -88,11 +92,17 @@ class SelectSkin extends HTMLElement {
       isNext && this.right();
     });
 
-    this.images = [...this.shadowRoot.querySelectorAll("img")];
-    const firstImage = this.images[0];
-    firstImage.classList.add("selected");
-    this.images.forEach((image, index) =>
-      image.addEventListener("click", () => this.selectSkin(index)));
+    const images = this.images = [...this.shadowRoot.querySelectorAll("img")];
+    const getSkinFromStorage = localStorage.getItem("skin") ?? "original";
+    images.forEach((image, index) => {
+      image.addEventListener("click", () => {
+        this.selectSkin(index);
+        localStorage.setItem("skin", image.dataset.name);
+      });
+      if (image.src.includes(getSkinFromStorage)) {
+        image.classList.add("selected");
+      }
+    });
   }
 
   selectSkin(index) {
@@ -111,7 +121,7 @@ class SelectSkin extends HTMLElement {
     this.shadowRoot.innerHTML = /* html */`
     <style>${SelectSkin.styles}</style>
     <div class="container">
-      ${SKINS.map(skin => /* html */`<img src="images/skins/${skin.value}.png" alt="${skin.name}" title="${skin.name}">`).join("")}
+      ${SKINS.map(skin => /* html */`<img src="images/skins/${skin.value}.png" data-name="${skin.value}" alt="${skin.name}" title="${skin.name}">`).join("")}
     </div>`;
   }
 }

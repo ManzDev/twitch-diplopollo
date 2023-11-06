@@ -10,18 +10,29 @@ class ScreenMenu extends HTMLElement {
   }
 
   static get styles() {
-    return styles;
+    return /* css */`
+      :host {
+        --image-head: url("images/skins/${localStorage.getItem("skin") ?? "original"}.png");
+      }
+      ${styles}
+    `;
   }
 
   connectedCallback() {
     this.render();
     const [input, ...selects] = this.shadowRoot.querySelectorAll("input[type=text], select:not([disabled])");
     const skinSelect = this.shadowRoot.querySelector("select-skin");
+    const actionSelect = this.shadowRoot.querySelector("select[name='action']");
     skinSelect.addEventListener("selectskin", ({ detail }) => this.changeHead(detail));
 
     input.addEventListener("input", () => this.updateURL());
     selects.forEach(field => field.addEventListener("change", () => this.updateURL()));
     this.shadowRoot.querySelector("button").addEventListener("click", () => this.copyURL());
+    actionSelect.addEventListener("change", async () => {
+      if (actionSelect.options[actionSelect.selectedIndex].value === "confetti") {
+        (await import("canvas-confetti")).default();
+      }
+    });
   }
 
   async copyURL() {
@@ -30,7 +41,11 @@ class ScreenMenu extends HTMLElement {
       channel.reportValidity();
     } else {
       localStorage.setItem("channel", channel.value);
-      const url = this.shadowRoot.querySelector("textarea").value;
+      const textarea = this.shadowRoot.querySelector("textarea");
+      const button = this.shadowRoot.querySelector("button");
+      const url = textarea.value;
+      textarea.select();
+      button.textContent = "¡URL copiada!";
       await navigator.clipboard.writeText(url);
     }
   }
@@ -56,7 +71,10 @@ class ScreenMenu extends HTMLElement {
 
   updateURL() {
     const textarea = this.shadowRoot.querySelector("textarea");
+    const button = this.shadowRoot.querySelector("button");
     textarea.value = this.getURL();
+    localStorage.setItem("url", this.getURL());
+    button.textContent = "Copiar URL";
   }
 
   render() {
@@ -138,7 +156,7 @@ class ScreenMenu extends HTMLElement {
           </select>
         </label>
 
-        <textarea class="code" readonly></textarea>
+        <textarea class="code" readonly>${localStorage.getItem("url") ?? ""}</textarea>
         <button>Copiar URL</button>
         <small>Copia esta URL y pegala en el OBS como fuente de navegador.</small>
       </div>
