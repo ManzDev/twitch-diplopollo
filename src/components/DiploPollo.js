@@ -17,6 +17,7 @@ const headName = new URL(location.href).searchParams.get("skin");
 const decreaseEnabled = new URL(location.href).searchParams.get("decrease") === "1";
 const ghostEnabled = new URL(location.href).searchParams.get("ghost") === "1";
 const soundEnabled = new URL(location.href).searchParams.get("sound") === "1";
+const confettiEnabled = getParam("action") === "confetti";
 
 class DiploPollo extends HTMLElement {
   constructor() {
@@ -69,13 +70,22 @@ class DiploPollo extends HTMLElement {
     this.style.setProperty("--opacity", value);
   }
 
-  incNeck(size) {
+  incNeck(size, silent = false) {
     this.style.setProperty("--neck-timing", CB_TIMING);
     this.neckSize += size;
     this.updateNeck();
+    confettiEnabled && !silent && this.doConfetti();
     this.activity++;
     this.setOpacity(1);
     this.playSound();
+  }
+
+  doConfetti() {
+    confetti({
+      particleCount: 50,
+      spread: 42,
+      origin: { x: 0.02, y: 1 }
+    });
   }
 
   playSound() {
@@ -98,13 +108,6 @@ class DiploPollo extends HTMLElement {
 
   updateNeck() {
     this.style.setProperty("--neck-size", `${this.neckSize}px`);
-    const isConfetti = getParam("action") === "confetti";
-
-    isConfetti && confetti({
-      particleCount: 50,
-      spread: 42,
-      origin: { x: 0.02, y: 1 }
-    });
   }
 
   connectedCallback() {
@@ -133,7 +136,7 @@ class DiploPollo extends HTMLElement {
     const hasActivity = this.activity > 0;
 
     if (!hasActivity) {
-      decreaseEnabled && this.neckSize > 0 && this.incNeck(IDLE_NECK_DECREMENT);
+      decreaseEnabled && this.neckSize > 0 && this.incNeck(IDLE_NECK_DECREMENT, true);
       ghostEnabled && this.setOpacity(IDLE_OPACITY);
     }
 
