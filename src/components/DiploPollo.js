@@ -41,6 +41,9 @@ class DiploPollo extends HTMLElement {
         image-rendering: pixelated;
         opacity: var(--opacity, 1);
         transition: opacity 0.3s;
+        position: absolute;
+        bottom: 0;
+        left: 0;
       }
 
       diplo-head {
