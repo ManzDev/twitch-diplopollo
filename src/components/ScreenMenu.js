@@ -1,7 +1,7 @@
 import "../components/SelectSkin.js";
 import styles from "./ScreenMenu.css?inline";
 import { version } from "../../package.json";
-import { musicManager } from "../modules/musicManager.js";    // eslint-disable-line
+import { navManager } from "../modules/navManager.js";    // eslint-disable-line
 
 class ScreenMenu extends HTMLElement {
   constructor() {
@@ -108,6 +108,7 @@ class ScreenMenu extends HTMLElement {
           <select name="mode">
             <option value="command" selected>Comando !pollo</option>
             <option value="bit">Bits (Donaciones)</option>
+            <option value="sub">Subs/Gifts (Suscripciones)</option>
           </select>
         </label>
 

@@ -15,6 +15,7 @@ export class Twitch {
     this.connect(channel);
     mode === "bit" && this.enableBitMode();
     mode === "command" && this.enableCommandMode();
+    mode === "sub" && this.enableSubMode();
   }
 
   connect(channel) {
@@ -51,5 +52,16 @@ export class Twitch {
         this.lastCommand = new Date().getTime();
       }
     });
+  }
+
+  enableSubMode() {
+    const subMode = (username) => {
+      const number = 40;
+      this.diploPollo.incNeck(number);
+    };
+
+    this.client.on("sub", (channel, username) => subMode(username));
+    this.client.on("resub", (channel, username) => subMode(username));
+    this.client.on("subgift", (channel, username) => subMode(username));
   }
 }

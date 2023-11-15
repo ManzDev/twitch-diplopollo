@@ -27,7 +27,10 @@ body {
   background: #001;
 }
 
-.music-icon {
+nav.topbar {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 1rem;
   position: absolute;
   top: 20px;
   right: 20px;

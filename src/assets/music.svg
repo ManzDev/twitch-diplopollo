@@ -1,0 +1,5 @@
+<svg width="32" height="32" viewBox="0 0 16 16">
+  <path stroke="#fff" stroke-width="1" stroke-opacity="var(--opacity, 1)" d="M1 1 L16 16" />
+  <path fill="#fff"
+    d="M12 5.21v5.058A2 2 0 1 0 13 12V1.926a.8.8 0 0 0-1.07-.754l-6.4 2.286a.8.8 0 0 0-.53.753v7.056A2 2 0 1 0 6 13V7.353l6-2.142Z" />
+</svg>
