@@ -47,6 +47,9 @@
         image-rendering: pixelated;
         opacity: var(--opacity, 1);
         transition: opacity 0.3s;
+        position: absolute;
+        bottom: 0;
+        left: 0;
       }
 
       diplo-head {
@@ -71,4 +74,4 @@
     <div class="container">
       <diplo-head></diplo-head>
       <div class="body"></div>
-    </div>`}}customElements.define("diplo-pollo",j);const F=document.querySelector(".container"),{searchParams:je}=new URL(location.href),ee=!!je.get("channel");if(ee){const C=document.createElement("diplo-pollo");F.classList.add("diplopollo-mode"),C.classList.add("animated"),F.append(C),new Ne}if(!ee){xe(()=>import("./ScreenMenu-627f2390.js"),[]),F.classList.add("menu-mode");const C=document.createElement("screen-menu");F.append(C)}export{xe as _,Ve as c};
+    </div>`}}customElements.define("diplo-pollo",j);const F=document.querySelector(".container"),{searchParams:je}=new URL(location.href),ee=!!je.get("channel");if(ee){const C=document.createElement("diplo-pollo");F.classList.add("diplopollo-mode"),C.classList.add("animated"),F.append(C),new Ne}if(!ee){xe(()=>import("./ScreenMenu-6b2f449d.js"),[]),F.classList.add("menu-mode");const C=document.createElement("screen-menu");F.append(C)}export{xe as _,Ve as c};
