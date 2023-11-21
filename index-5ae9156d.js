@@ -74,4 +74,4 @@
     <div class="container">
       <diplo-head></diplo-head>
       <div class="body"></div>
-    </div>`}}customElements.define("diplo-pollo",j);const F=document.querySelector(".container"),{searchParams:je}=new URL(location.href),ee=!!je.get("channel");if(ee){const C=document.createElement("diplo-pollo");F.classList.add("diplopollo-mode"),C.classList.add("animated"),F.append(C),new Oe}if(!ee){Se(()=>import("./ScreenMenu-8cf719ab.js"),[]),F.classList.add("menu-mode");const C=document.createElement("screen-menu");F.append(C)}export{Se as _,Ve as c};
+    </div>`}}customElements.define("diplo-pollo",j);const F=document.querySelector(".container"),{searchParams:je}=new URL(location.href),ee=!!je.get("channel");if(ee){const C=document.createElement("diplo-pollo");F.classList.add("diplopollo-mode"),C.classList.add("animated"),F.append(C),new Oe}if(!ee){Se(()=>import("./ScreenMenu-c20d118d.js"),[]),F.classList.add("menu-mode");const C=document.createElement("screen-menu");F.append(C)}export{Se as _,Ve as c};
