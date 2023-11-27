@@ -1,4 +1,5 @@
 import "../components/SelectSkin.js";
+import "../components/InfoPopup.js";
 import styles from "./ScreenMenu.css?inline";
 import { version } from "../../package.json";
 import { navManager } from "../modules/navManager.js";    // eslint-disable-line
@@ -91,20 +92,28 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>Skin</p>
-          <info-popup title="Elige la skin del pollo que más te guste">ℹ</info-popup>
+          <info-popup text="Elige la skin del pollo que más te guste"></info-popup>
           <select-skin></select-skin>
         </label>
 
         <label>
           <p>Canal de Twitch</p>
-          <info-popup title="Canal de Twitch al que queremos conectarnos">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Canal de Twitch al que queremos conectarnos">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <input type="text" name="channel" placeholder="ManzDev" value="${channel}"
                 required pattern="([a-zA-Z0-9_])+">
         </label>
 
         <label>
           <p>Modalidad</p>
-          <info-popup title="El cuello del pollo crece cuando el chat escribe comandos o cuando dona bits">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="El cuello del pollo crece cuando el chat escribe comandos o cuando dona bits" translate-top="-63px">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="mode">
             <option value="command" selected>Comando !pollo</option>
             <option value="bit">Bits (Donaciones)</option>
@@ -114,7 +123,11 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>Interacción</p>
-          <info-popup title="Cuando hay una interacción con el pollo, ocurre algo adicional">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Cuando hay una interacción con el pollo, ocurre algo adicional" translate-top="-63px">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="action">
             <option value="none" selected>Ninguna</option>
             <option value="confetti">Party</option>
@@ -123,7 +136,11 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>Autodecrecimiento</p>
-          <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo.">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Cuando no hay interacción con el pollo durante un tiempo, el cuello va decreciendo por sí solo." translate-top="-63px">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="decrease">
             <option value="1">Activado</option>
             <option value="none" selected>Desactivado</option>
@@ -132,7 +149,11 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>Idle ghost</p>
-          <info-popup title="Cuando no hay interacción con el pollo durante un tiempo, el pollo se vuelve semitransparente.">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Cuando no hay interacción con el pollo durante un tiempo, el pollo se vuelve semitransparente." translate-top="-63px">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="ghost">
             <option value="1">Activado</option>
             <option value="none" selected>Desactivado</option>
@@ -141,7 +162,11 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>Sonido</p>
-          <info-popup title="Activa los sonidos. Desmarcado, mutea los sonidos.">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Activa los sonidos. Desmarcado, mutea los sonidos." translate-top="-63px">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="sound">
             <option value="1">Activado</option>
             <option value="none" selected>Desactivado</option>
@@ -150,7 +175,11 @@ class ScreenMenu extends HTMLElement {
 
         <label>
           <p>DiploPollo 3000™</p>
-          <info-popup title="Funcionalidad especial">ℹ</info-popup>
+          <span class="info">
+            <info-popup text="Funcionalidad especial">
+              <span>ℹ</span>
+            </info-popup>
+          </span>
           <select name="multineck" disabled>
             <option value="1">Activado</option>
             <option value="none" selected>Desactivado</option>
