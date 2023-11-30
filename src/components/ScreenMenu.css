@@ -163,11 +163,10 @@ select[name="skin"] {
   &::-webkit-scrollbar-thumb { background: #0967ab; }
 }
 
-info-popup {
+.info info-popup {
   --size: 25px;
 
   background: #0967ab;
-  color: #fff;
   font-size: 1rem;
   display: inline-grid;
   width: var(--size);
@@ -175,6 +174,8 @@ info-popup {
   place-items: center;
   border-radius: 50%;
   transform: translate(0.25rem, -0.05rem);
+  position: relative;
+  z-index: 11;
 }
 
 .preview {

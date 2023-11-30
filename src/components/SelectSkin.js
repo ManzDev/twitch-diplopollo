@@ -1,3 +1,4 @@
+import "../components/InfoPopup.js";
 import SKINS from "../assets/skins.json";
 
 class SelectSkin extends HTMLElement {
@@ -122,7 +123,11 @@ class SelectSkin extends HTMLElement {
     this.shadowRoot.innerHTML = /* html */`
     <style>${SelectSkin.styles}</style>
     <div class="container">
-      ${SKINS.map(skin => /* html */`<img src="images/skins/${skin.value}.png" data-name="${skin.value}" alt="${skin.name}" title="${skin.name}">`).join("")}
+      ${SKINS.map(skin => /* html */`
+        <info-popup text="${skin.name}" translate-top="-38px">
+          <img src="images/skins/${skin.value}.png" data-name="${skin.value}" alt="${skin.name}">
+        </info-popup>
+      `).join("")}
     </div>`;
   }
 }
